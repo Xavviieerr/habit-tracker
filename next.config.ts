@@ -1,8 +1,18 @@
-import type { NextConfig } from "next";
+// import type { NextConfig } from "next";
+// const withPWA = require("@ducanh2912/next-pwa").default({
+//   dest: "public",
+// });
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
-};
+// const nextConfig: NextConfig = {
+//   /* config options here */
+//   reactCompiler: true,
+// };
 
-export default nextConfig;
+// export default nextConfig;
+const withPWA = require("@ducanh2912/next-pwa").default({
+	dest: "public",
+});
+
+module.exports = withPWA({
+	turbopack: {},
+});
