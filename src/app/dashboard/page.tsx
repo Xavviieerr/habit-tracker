@@ -1,3 +1,6 @@
-export default function Dashboard() {
-	return <div>dashboard</div>;
+"use client";
+import HabitList from "@/components/habits/HabitList";
+
+export default function DashboardPage() {
+	return <HabitList />;
 }
