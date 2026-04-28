@@ -6,7 +6,8 @@ import { getSession } from "@/lib/auth";
 import { validateHabitName } from "@/lib/validators";
 
 export default function HabitForm({ onClose }: any) {
-	const session = getSession();
+	const session = getSession() || null;
+	if (!session) return;
 
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");

@@ -1,19 +1,16 @@
 import { STORAGE_KEYS } from "./constants";
 import type { Habit } from "@/types/habit";
 import { getSession } from "./auth";
+import { getItem, setItem } from "./storage";
 
 function getAllHabits(): Habit[] {
-	if (typeof window === "undefined") return [];
-
-	const raw = localStorage.getItem(STORAGE_KEYS.HABITS);
-	return raw ? JSON.parse(raw) : [];
+	return getItem<Habit[]>(STORAGE_KEYS.HABITS, []);
 }
 
 function saveAll(habits: Habit[]) {
-	localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
+	setItem(STORAGE_KEYS.HABITS, habits);
 }
 
-// ---------------- CREATE ----------------
 export function createHabit(
 	data: Omit<Habit, "id" | "createdAt" | "completions">,
 ) {
@@ -32,7 +29,6 @@ export function createHabit(
 	saveAll([...habits, newHabit]);
 }
 
-// ---------------- READ ----------------
 export function getUserHabits(): Habit[] {
 	const session = getSession();
 	if (!session) return [];
@@ -40,25 +36,20 @@ export function getUserHabits(): Habit[] {
 	return getAllHabits().filter((h) => h.userId === session.userId);
 }
 
-// ---------------- UPDATE (EDIT) ----------------
 export function updateHabit(updated: Habit) {
-	const raw = localStorage.getItem("habit-tracker-habits");
-	const habits: Habit[] = raw ? JSON.parse(raw) : [];
+	const habits = getAllHabits();
 
 	const next = habits.map((habit) =>
 		habit.id === updated.id ? updated : habit,
 	);
 
-	localStorage.setItem("habit-tracker-habits", JSON.stringify(next));
+	saveAll(next);
 }
 
-// ---------------- DELETE ----------------
 export function deleteHabit(id: string) {
 	const habits = getAllHabits().filter((h) => h.id !== id);
 	saveAll(habits);
 }
-
-// ---------------- TOGGLE COMPLETION ----------------
 
 export function toggleHabitCompletion(habit: Habit, date: string): Habit {
 	const exists = habit.completions.includes(date);

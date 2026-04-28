@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"test:unit": "vitest run --coverage",
+		"test:unit": "vitest run tests/unit --coverage",
 		"test:integration": "vitest run",
 		"test:e2e": "playwright test",
 		"test": "npm run test:unit && npm run test:integration && npm run test:e2e",
@@ -28,8 +28,10 @@
 		"babel-plugin-react-compiler": "1.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "16.2.4",
+		"jsdom": "^29.1.0",
 		"tailwindcss": "^4",
 		"typescript": "^5",
+		"vite-tsconfig-paths": "^6.1.1",
 		"webpack": "^5.106.2"
 	}
 }

@@ -1,31 +1,29 @@
 import { STORAGE_KEYS } from "./constants";
 import type { User, Session } from "@/types/auth";
 import { validateEmail, validatePassword } from "./validators";
+import { getItem, setItem, removeItem } from "./storage";
 
 //users
 function getUsers(): User[] {
-	if (typeof window === "undefined") return [];
-
-	const raw = localStorage.getItem(STORAGE_KEYS.USERS);
-	return raw ? JSON.parse(raw) : [];
+	return getItem<User[]>(STORAGE_KEYS.USERS, []);
 }
 
 function saveUsers(users: User[]) {
-	localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+	setItem(STORAGE_KEYS.USERS, users);
 }
 
 //sessions
-export function getSession() {
-	if (typeof window === "undefined") return null;
-
-	const data = localStorage.getItem(STORAGE_KEYS.SESSION);
-	return data ? JSON.parse(data) : null;
+export function getSession(): Session {
+	return getItem(STORAGE_KEYS.SESSION, null);
 }
 
-function setSession(session: Session) {
-	localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+export function setSession(session: Session) {
+	setItem(STORAGE_KEYS.SESSION, session);
 }
 
+export function clearSession() {
+	removeItem(STORAGE_KEYS.SESSION);
+}
 //sign-up
 export function signup(email: string, password: string) {
 	const emailError = validateEmail(email);

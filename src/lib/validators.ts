@@ -2,7 +2,7 @@ export function validateEmail(email: string) {
 	if (!email) return "Email is required";
 
 	const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	if (!regex.test(email)) return "Invalid email format";
+	if (!regex.test(email)) return "Invalid email address";
 
 	return null;
 }
