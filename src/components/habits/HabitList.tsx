@@ -7,6 +7,7 @@ import HabitCard from "@/components/habits/HabitCard";
 import { getUserHabits } from "@/lib/habits";
 import { STORAGE_KEYS } from "@/lib/constants";
 import { useRouter } from "next/navigation";
+import { clearSession } from "@/lib/auth";
 
 export default function HabitList() {
 	const router = useRouter();
@@ -23,7 +24,7 @@ export default function HabitList() {
 	}, []);
 
 	const logout = () => {
-		localStorage.removeItem(STORAGE_KEYS.SESSION);
+		clearSession();
 		router.replace("/login");
 	};
 
