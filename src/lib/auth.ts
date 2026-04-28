@@ -70,11 +70,11 @@ export function login(email: string, password: string) {
 
 	const user = users.find((user) => user.email === email);
 	if (!user) {
-		throw new Error("User not found");
+		throw new Error("Invalid email or password");
 	}
 
 	if (user.password !== password) {
-		throw new Error("Invalid credentials");
+		throw new Error("Invalid email or password");
 	}
 
 	const session: Session = {

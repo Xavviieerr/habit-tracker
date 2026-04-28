@@ -1,9 +1,25 @@
+const CACHE_NAME = "Habit-tracker";
+
+const APP_SHELL = ["/", "/login", "/signup", "/dashboard"];
+
 self.addEventListener("install", (event) => {
-	console.log("Service Worker installing...");
+	event.waitUntil(
+		caches.open(CACHE_NAME).then((cache) => {
+			return cache.addAll(APP_SHELL);
+		}),
+	);
 });
 
-self.addEventListener("activate", (event) => {
-	console.log("Service Worker activated...");
+self.addEventListener("fetch", (event) => {
+	event.respondWith(
+		caches.match(event.request).then((cached) => {
+			return (
+				cached ||
+				fetch(event.request).catch(() => {
+					// fallback = prevents hard crash
+					return caches.match("/");
+				})
+			);
+		}),
+	);
 });
-
-self.addEventListener("fetch", (event) => {});
