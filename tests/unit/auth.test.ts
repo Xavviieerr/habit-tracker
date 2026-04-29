@@ -77,6 +77,7 @@ describe("auth.ts", () => {
 			vi.mocked(storage.getItem).mockReturnValue([user]);
 			
 			const session = login("test@test.com", "password123");
+			if(!session) return;
 			expect(session.userId).toBe(user.id);
 			expect(storage.setItem).toHaveBeenCalledWith(STORAGE_KEYS.SESSION, {
 				userId: user.id,

@@ -57,30 +57,43 @@ export function signup(email: string, password: string) {
 	return newUser;
 }
 
-export function login(email: string, password: string) {
-	const emailError = validateEmail(email);
-	if (emailError) throw new Error(emailError);
+// export function login(email: string, password: string) {
+// 	const emailError = validateEmail(email);
+// 	if (emailError) throw new Error(emailError);
 
-	const passwordError = validatePassword(password);
-	if (passwordError) throw new Error(passwordError);
+// 	const passwordError = validatePassword(password);
+// 	if (passwordError) throw new Error(passwordError);
 
-	const users = getUsers();
+// 	const users = getUsers();
 
-	const user = users.find((user) => user.email === email);
+// 	const user = users.find((user) => user.email === email);
+// 	if (!user) {
+// 		throw new Error("Invalid email or password");
+// 	}
+
+// 	if (user.password !== password) {
+// 		throw new Error("Invalid email or password");
+// 	}
+
+// 	const session: Session = {
+// 		userId: user.id,
+// 		email: user.email,
+// 	};
+
+// 	setSession(session);
+
+// 	return session;
+// }
+export function login(email: string, password: string): Session {
+	const users = getItem<User[]>(STORAGE_KEYS.USERS, []);
+
+	const user = users.find((u) => u.email === email && u.password === password);
+
 	if (!user) {
 		throw new Error("Invalid email or password");
 	}
 
-	if (user.password !== password) {
-		throw new Error("Invalid email or password");
-	}
-
-	const session: Session = {
-		userId: user.id,
-		email: user.email,
-	};
-
-	setSession(session);
-
+	const session: Session = { userId: user.id, email: user.email };
+	setItem(STORAGE_KEYS.SESSION, session);
 	return session;
 }
