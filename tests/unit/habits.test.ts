@@ -55,7 +55,7 @@ describe("habits.ts", () => {
 			expect(original.completions).toEqual([]);
 		});
 
-		it("ensures no duplicate completion dates exist", () => {
+		it("does not return duplicate completion dates", () => {
 			const habit = { ...baseHabit, completions: [] };
 
 			const result = toggleHabitCompletion(habit, "2026-04-27");

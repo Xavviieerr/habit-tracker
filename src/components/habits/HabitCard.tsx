@@ -146,6 +146,7 @@ export default function HabitCard({ habit, refresh }: any) {
 						</label>
 						<input
 							id={`edit-name-${habit.id}`}
+							data-testid="habit-name-input"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							className={inputClass}
@@ -161,6 +162,7 @@ export default function HabitCard({ habit, refresh }: any) {
 						</label>
 						<input
 							id={`edit-description-${habit.id}`}
+							data-testid="habit-description-input"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							className={inputClass}
@@ -174,12 +176,14 @@ export default function HabitCard({ habit, refresh }: any) {
 								setName(habit.name);
 								setDescription(habit.description);
 							}}
+							data-testid="habit-cancel-button"
 							className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-[#7a8a60] bg-[#F5F2EC] hover:bg-[#e8e4dc] transition-colors"
 						>
 							Cancel
 						</button>
 						<button
 							onClick={handleSaveEdit}
+							data-testid="habit-save-button"
 							className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#496800] hover:bg-[#3a5200] transition-colors shadow-[0_4px_16px_rgba(73,104,0,0.25)]"
 						>
 							Save

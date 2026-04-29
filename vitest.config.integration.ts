@@ -10,6 +10,8 @@ export default defineConfig({
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "html", "lcov"],
+			// Integration tests own component coverage; lib coverage belongs to unit tests.
+			include: ["src/components/**"],
 			thresholds: {
 				lines: 80,
 				functions: 80,
